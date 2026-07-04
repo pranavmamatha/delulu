@@ -1,5 +1,5 @@
-import { Session } from "@supabase/supabase-js"
-import { create } from "zustand"
+import { Session } from "@supabase/supabase-js";
+import { create } from "zustand";
 
 type AuthType = {
   session?: Session | null;
@@ -29,7 +29,7 @@ export const useAuthStore = create<AuthType>((set) => ({
   reset: () => {
     set(() => ({
       session: null,
-      isloading: false,
+      isLoading: false,
       isLoggedIn: false
     }))
   }

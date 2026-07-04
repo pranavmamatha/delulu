@@ -1,19 +1,19 @@
 {
   "expo": {
-    "name": "delulily",
-    "slug": "delulily",
+    "name": "delulu",
+    "slug": "delulu",
     "assetBundlePatterns": [
       "**/*"
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "scheme": "delulily",
+    "scheme": "delulu",
     "icon": "./assets/images/splash-icon.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.thisispranav.delulily",
+      "bundleIdentifier": "com.thisispranav.delulu",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -34,7 +34,7 @@
         "android.permission.READ_MEDIA_VIDEO",
         "android.permission.READ_MEDIA_AUDIO"
       ],
-      "package": "com.thisispranav.delulily"
+      "package": "com.thisispranav.delulu"
     },
     "web": {
       "output": "static"
@@ -68,7 +68,7 @@
     ],
     "experiments": {
       "typedRoutes": true,
-      "reactCompiler": true
+      "reactCompiler": false
     },
     "extra": {
       "router": {},

@@ -8,7 +8,7 @@ An AI-powered image transformation app built with React Native and Expo. Upload 
 - **🎨 Template Gallery** — Browse and search a curated collection of AI style templates with a beautiful grid layout, shimmer loading states, and paginated browsing.
 - **📸 Image Upload & Generation** — Pick a photo from your gallery, select a template, and submit a job to generate an AI-stylized image via Supabase Edge Functions.
 - **👤 Profile & Creations** — View your profile with a gradient header and avatar, browse all your past creations with pagination, and track job statuses in real-time.
-- **💾 Download to Gallery** — Save generated images directly to a dedicated "delulily" album on your device.
+- **💾 Download to Gallery** — Save generated images directly to a dedicated "delulu" album on your device.
 - **🔐 Google Authentication** — Secure sign-in with Google OAuth powered by Supabase Auth and Expo Secure Store for token persistence.
 - **🎭 Animated Splash Screen** — Custom animated splash screen with smooth transitions on app launch.
 
@@ -27,7 +27,7 @@ An AI-powered image transformation app built with React Native and Expo. Upload 
 ## 📁 Project Structure
 
 ```
-delulily/
+delulu/
 ├── app/                    # Expo Router file-based routes
 │   ├── (tabs)/             # Tab navigator (Home & Profile)
 │   │   ├── _layout.tsx     # Tab bar configuration
@@ -88,8 +88,8 @@ delulily/
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/your-username/delulily.git
-   cd delulily
+   git clone https://github.com/your-username/delulu.git
+   cd delulu
    ```
 
 2. **Install dependencies**

@@ -1,63 +1,74 @@
 import GoogleSignInButton from "@/components/auth/google-signin-button";
 import { Image } from "expo-image";
-import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import { Text, View } from "react-native";
 import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
 
 export default function Login() {
   return (
-    <View className="flex-1 bg-gray-950">
-      <StatusBar style="light" />
+    <View className="flex-1 bg-delulu-primary relative overflow-hidden">
+      <StatusBar style="dark" />
 
-      {/* Background Gradient */}
-      <LinearGradient
-        colors={["#4c1d95", "#0f172a", "#000000"]}
-        locations={[0, 0.4, 0.9]}
-        className="absolute inset-0"
-      />
-
-      {/* Decorative blurred blobs */}
-      <View className="absolute inset-0 overflow-hidden">
-        <View className="absolute -top-20 -left-20 w-96 h-96 bg-fuchsia-600 rounded-full blur-[100px] opacity-20" />
-        <View className="absolute top-1/3 -right-20 w-80 h-80 bg-blue-600 rounded-full blur-[100px] opacity-20" />
-        <View className="absolute -bottom-20 left-1/2 w-96 h-96 bg-indigo-600 rounded-full blur-[100px] opacity-20 transform -translate-x-1/2" />
+      {/* Decorative background shapes */}
+      <View className="absolute -bottom-40 -left-20 w-[400px] h-[400px] bg-delulu-dark rounded-full" />
+      <View className="absolute -right-20 top-1/4 w-[300px] h-[300px] bg-delulu-primary/80 rounded-full mix-blend-screen" />
+      
+      <View className="absolute top-12 left-8 opacity-80 transform -rotate-12">
+        <Text className="text-delulu-pink text-5xl font-light">〰</Text>
+      </View>
+      <View className="absolute top-16 right-10">
+        <Text className="text-delulu-dark text-4xl">✨</Text>
+      </View>
+      <View className="absolute bottom-32 right-6 opacity-80 transform rotate-12">
+        <Text className="text-delulu-pink text-5xl font-light">〰</Text>
+      </View>
+      <View className="absolute top-1/2 left-6">
+        <Text className="text-delulu-dark text-3xl">✴</Text>
       </View>
 
-      <View className="flex-1 justify-center items-center px-8 relative z-10 w-full max-w-md mx-auto">
-        {/* Logo Section */}
+      <View className="flex-1 justify-center items-center p-6 w-full max-w-md mx-auto z-10 mt-10 mb-8">
         <Animated.View
           entering={FadeInUp.delay(200).duration(1000).springify()}
-          className="items-center mb-16"
+          className="w-full bg-delulu-card rounded-[40px] p-8 items-center shadow-xl shadow-black/5 flex-1 justify-between py-12"
         >
-          <View className="w-32 h-32 bg-white/10 rounded-3xl items-center justify-center mb-6 border border-white/20 shadow-lg backdrop-blur-xl">
+          <View className="items-center w-full">
+            {/* Logo Section */}
             <Image
               source={require("../assets/images/splash-icon.png")}
-              className="w-20 h-20"
+              className="w-32 h-32 mb-2"
               contentFit="contain"
             />
+
+            <Text className="text-[64px] font-extrabold text-delulu-dark tracking-tighter mb-4 text-center leading-none">
+              delulu
+            </Text>
+            
+            <View className="items-center mb-8">
+              <Text className="text-delulu-dark text-[20px] font-bold text-center">
+                Turn your <Text className="text-delulu-pink italic">delusion</Text> into reality.
+              </Text>
+              <View className="w-16 h-1 bg-delulu-pink/40 rounded-full mt-2 -rotate-2" />
+            </View>
+
+            <Text className="text-delulu-dark/70 text-center text-[15px] font-medium px-4 leading-relaxed">
+              Your AI companion to plan, create and achieve the life you imagine.
+            </Text>
           </View>
 
-          <Text className="text-5xl font-bold text-white tracking-widest text-center shadow-sm">
-            delulily
-          </Text>
-          <Text className="text-white/60 text-lg mt-3 text-center font-medium tracking-wide">
-            Turn your delusions into reality
-          </Text>
-        </Animated.View>
+          {/* Action Section */}
+          <Animated.View
+            entering={FadeInDown.delay(400).duration(1000).springify()}
+            className="w-full mt-8"
+          >
+            <View className="mb-8">
+              <GoogleSignInButton />
+            </View>
 
-        {/* Action Section */}
-        <Animated.View
-          entering={FadeInDown.delay(400).duration(1000).springify()}
-          className="w-full"
-        >
-          <View className="mb-6">
-            <GoogleSignInButton />
-          </View>
-
-          <Text className="text-white/30 text-xs text-center px-4 leading-5">
-            By continuing, you agree to our Terms of Service and Privacy Policy.
-          </Text>
+            <Text className="text-delulu-dark/60 text-[13px] text-center px-2 leading-5">
+              By continuing, you agree to our{"\n"}
+              <Text className="text-delulu-pink font-semibold">Terms of Service</Text> and <Text className="text-delulu-pink font-semibold">Privacy Policy</Text>
+            </Text>
+          </Animated.View>
         </Animated.View>
       </View>
     </View>

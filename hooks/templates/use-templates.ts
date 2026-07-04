@@ -1,6 +1,6 @@
 import { supabase } from "@/lib/supabase";
 import { TemplateType, useTemplateStore } from "@/store/useTemplateStore";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useRef } from "react";
 
 const PAGE_SIZE = 6;
 
@@ -15,7 +15,9 @@ export function useTemplates() {
     const { setIsLoading, setHasMore, setTemplates, appendTemplates, setPage } = store.getState();
 
     try {
-      setIsLoading(true);
+      if (pageToFetch === 0) {
+        setIsLoading(true);
+      }
 
       const start = pageToFetch * PAGE_SIZE;
       const end = start + PAGE_SIZE - 1;
@@ -36,7 +38,6 @@ export function useTemplates() {
       if (error) {
         console.error("Error fetching templates:", error);
         setIsLoading(false);
-        isFetchingRef.current = false;
         return;
       }
 
@@ -46,28 +47,12 @@ export function useTemplates() {
         }
         setHasMore(false);
         setIsLoading(false);
-        isFetchingRef.current = false;
         return;
       }
 
       setHasMore(data.length >= PAGE_SIZE);
 
-      const skeletonTemplates: TemplateType[] = data.map((t) => ({
-        id: t.id,
-        name: t.name ?? "Untitled",
-        previewUrl: null,
-      }));
-
-      if (pageToFetch === 0) {
-        setTemplates(skeletonTemplates);
-      } else {
-        appendTemplates(skeletonTemplates);
-      }
-
-      setIsLoading(false);
-      setPage(pageToFetch);
-
-      // Resolve preview URLs in parallel
+      // Fetch signed URLs immediately
       const paths = data.map((t) => `${t.id}/preview.png`);
       const { data: urlData, error: urlError } = await supabase.storage
         .from("templates")
@@ -75,26 +60,41 @@ export function useTemplates() {
 
       if (urlError) {
         console.error("Error fetching template preview URLs:", urlError);
-        isFetchingRef.current = false;
+        // Fallback to basic templates if URL signing fails
+        const fallbackTemplates: TemplateType[] = data.map((t) => ({
+          id: t.id,
+          name: t.name ?? "Untitled",
+          previewUrl: null,
+        }));
+
+        if (pageToFetch === 0) {
+          setTemplates(fallbackTemplates);
+        } else {
+          appendTemplates(fallbackTemplates);
+        }
+        setIsLoading(false);
         return;
       }
 
-      if (urlData) {
-        const { templates: currentTemplates } = store.getState();
-        const updated = currentTemplates.map((t) => {
-          const dataIndex = data.findIndex((d) => d.id === t.id);
-          if (dataIndex !== -1 && urlData[dataIndex]?.signedUrl) {
-            return { ...t, previewUrl: urlData[dataIndex].signedUrl };
-          }
-          return t;
-        });
-        setTemplates(updated);
+      // Merge data with signed URLs
+      const fullTemplates: TemplateType[] = data.map((t, index) => ({
+        id: t.id,
+        name: t.name ?? "Untitled",
+        previewUrl: urlData?.[index]?.signedUrl || null,
+      }));
+
+      if (pageToFetch === 0) {
+        setTemplates(fullTemplates);
+      } else {
+        appendTemplates(fullTemplates);
       }
+
+      setPage(pageToFetch);
     } catch (e) {
       console.error("Error in fetchTemplates:", e);
+    } finally {
       const { setIsLoading } = store.getState();
       setIsLoading(false);
-    } finally {
       isFetchingRef.current = false;
     }
   }, []);
@@ -111,6 +111,8 @@ export function useTemplates() {
     s.setPage(0);
     s.setHasMore(true);
     s.setIsLoading(true);
+    // Reset fetching ref
+    isFetchingRef.current = false;
     fetchTemplates(0, s.searchQuery);
   }, [fetchTemplates]);
 
@@ -138,13 +140,13 @@ export function useTemplates() {
     fetchTemplates(0, query);
   }, [fetchTemplates]);
 
-  useEffect(() => {
-    refresh();
-  }, [refresh]);
+  // useEffect(() => {
+  //   refresh();
+  // }, [refresh]);
 
   const isLoading = useTemplateStore((s) => s.isLoading);
   const isRefreshing = useTemplateStore((s) => s.isRefreshing);
   const hasMore = useTemplateStore((s) => s.hasMore);
 
-  return { loadMore, refresh, pullToRefresh, search, isLoading, isRefreshing, hasMore };
+  return { loadMore, refresh, pullToRefresh, search, isLoading, isRefreshing, hasMore, fetchTemplates };
 }

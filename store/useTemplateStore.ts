@@ -27,7 +27,7 @@ type TemplateStore = {
 
 export const useTemplateStore = create<TemplateStore>((set) => ({
   templates: [],
-  isLoading: true,
+  isLoading: false,
   isRefreshing: false,
   page: 0,
   hasMore: true,

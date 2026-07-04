@@ -11,8 +11,8 @@ export function useProfile() {
         console.debug("Error while fetching user Profile", error)
         return
       }
-      if (!data) {
-        console.debug("Error while fetching user Profile", error)
+      if (!data || data.length === 0) {
+        console.debug("No user profile found")
         return
       }
       setProfile(data[0].full_name, data[0].avatar_url)

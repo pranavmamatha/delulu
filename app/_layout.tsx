@@ -1,7 +1,7 @@
 import AnimatedSplash from "@/components/AnimatedSplash";
 import { useAuthListener } from "@/hooks/auth/use-auth";
 import { useAuthStore } from "@/store/useAuthStore";
-import { Stack } from "expo-router";
+import { Stack, useRouter, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback, useEffect, useState } from "react";
 import { View } from "react-native";
@@ -13,6 +13,9 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   useAuthListener();
   const { isLoggedIn, isLoading } = useAuthStore();
+
+  const segments = useSegments();
+  const router = useRouter();
   const [appReady, setAppReady] = useState(false);
   const [splashDone, setSplashDone] = useState(false);
 
@@ -28,6 +31,21 @@ export default function RootLayout() {
     }
   }, [isLoading]);
 
+  useEffect(() => {
+    if (isLoading) return;
+
+
+    const isLogin = segments[0] === 'login';
+
+    if (!isLoggedIn && !isLogin) {
+      // Redirect to the login page.
+      router.replace('/login');
+    } else if (isLoggedIn && isLogin) {
+      // Redirect to the home page or tabs.
+      router.replace('/(tabs)');
+    }
+  }, [isLoggedIn, segments, isLoading]);
+
   const onSplashFinish = useCallback(() => {
     setSplashDone(true);
   }, []);
@@ -35,14 +53,10 @@ export default function RootLayout() {
   return (
     <View style={{ flex: 1, backgroundColor: "#000000" }}>
       <Stack>
-        <Stack.Protected guard={isLoggedIn}>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="job/[id]" options={{ headerShown: false }} />
-          <Stack.Screen name="template/[id]" options={{ headerShown: false }} />
-        </Stack.Protected>
-        <Stack.Protected guard={!isLoggedIn}>
-          <Stack.Screen name="login" options={{ headerShown: false }} />
-        </Stack.Protected>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="job/[id]" options={{ headerShown: false }} />
+        <Stack.Screen name="template/[id]" options={{ headerShown: false }} />
+        <Stack.Screen name="login" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
 

@@ -2,7 +2,7 @@ import { supabase } from "@/lib/supabase";
 import { makeRedirectUri } from "expo-auth-session";
 import * as WebBrowser from "expo-web-browser";
 import { useEffect } from "react";
-import { Image, Text, TouchableOpacity } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 
 
 const redirectTo = makeRedirectUri();
@@ -12,38 +12,59 @@ function GoogleSignInButtonUi(operation: () => void) {
   return (
     <TouchableOpacity
       onPress={operation}
-      className="flex-row items-center bg-white border border-gray-200 rounded-full py-4 px-6 justify-center w-full active:bg-gray-50 mb-4"
+      className="flex-row items-center bg-delulu-dark rounded-[24px] py-4 px-6 justify-center w-full active:opacity-80"
       style={{
         shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.15,
+        shadowRadius: 12,
+        elevation: 5,
       }}
       activeOpacity={0.8}
     >
-      <Image
-        source={{ uri: 'https://developers.google.com/identity/images/g-logo.png' }}
-        style={{ width: 24, height: 24, marginRight: 12 }}
-      />
-      <Text className="text-gray-700 text-base font-semibold">
-        Sign in with Google
+      <View className="bg-white rounded-full w-8 h-8 items-center justify-center mr-3">
+        <Image
+          source={{ uri: 'https://developers.google.com/identity/images/g-logo.png' }}
+          style={{ width: 20, height: 20 }}
+        />
+      </View>
+      <Text className="text-white text-[17px] font-bold">
+        Continue with Google
       </Text>
     </TouchableOpacity>
   )
-
 }
 
 
+import * as QueryParams from "expo-auth-session/build/QueryParams";
+
 export default function GoogleSignInButton() {
-  function extractParamsFromUrl(url: string) {
-    const parsedUrl = new URL(url);
-    const hash = parsedUrl.hash.substring(1);
-    const params = new URLSearchParams(hash);
-    return {
-      access_token: params.get("access_token"),
-      refresh_token: params.get("refresh_token")
+  async function createSessionFromUrl(url: string) {
+    const { params, errorCode } = QueryParams.getQueryParams(url);
+
+    if (errorCode) {
+      console.error("OAuth Error:", errorCode);
+      throw new Error(errorCode);
     }
+    
+    // Handle PKCE flow
+    if (params.code) {
+      const { data, error } = await supabase.auth.exchangeCodeForSession(params.code);
+      if (error) throw error;
+      return data.session;
+    }
+
+    // Handle Implicit flow
+    const { access_token, refresh_token } = params;
+    if (!access_token || !refresh_token) return null;
+
+    const { data, error } = await supabase.auth.setSession({
+      access_token,
+      refresh_token
+    });
+
+    if (error) throw error;
+    return data.session;
   }
 
 
@@ -74,19 +95,13 @@ export default function GoogleSignInButton() {
     console.debug('onSignInButtonPress - openAuthSessionAsync - result', { result });
 
     if (result && result.type === "success") {
-      const params = extractParamsFromUrl(result.url);
-      console.log(params);
-      if (params.access_token && params.refresh_token) {
-        const { data, error } = await supabase.auth.setSession({
-          access_token: params.access_token,
-          refresh_token: params.refresh_token
-        })
-      } else {
-        console.error('onSignInButtonPress - setSession - failed');
-
+      try {
+        await createSessionFromUrl(result.url);
+      } catch (err) {
+        console.error('onSignInButtonPress - createSessionFromUrl - failed', err);
       }
     } else {
-      console.error('onSignInButtonPress - openAuthSessionAsync - failed');
+      console.error('onSignInButtonPress - openAuthSessionAsync - failed or cancelled');
     }
   }
 

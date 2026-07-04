@@ -115,20 +115,20 @@ export default function JobDetails() {
         setSaving(true);
         try {
             // Download file directly to cache
-            const fileName = `delulily_${Date.now()}.jpg`;
+            const fileName = `delulu_${Date.now()}.jpg`;
             const file = new ExpoFile(Paths.cache, fileName);
 
             await ExpoFile.downloadFileAsync(viewerImage, file);
 
             // Save to media library
             const asset = await MediaLibrary.createAssetAsync(file.uri);
-            const album = await MediaLibrary.getAlbumAsync("delulily");
+            const album = await MediaLibrary.getAlbumAsync("delulu");
             if (album == null) {
-                await MediaLibrary.createAlbumAsync("delulily", asset, false);
+                await MediaLibrary.createAlbumAsync("delulu", asset, false);
             } else {
                 await MediaLibrary.addAssetsToAlbumAsync([asset], album, false);
             }
-            Alert.alert("Saved!", "Image saved to 'delulily' album.");
+            Alert.alert("Saved!", "Image saved to 'delulu' album.");
         } catch (e) {
             console.error("Download error:", e);
             Alert.alert("Error", "Failed to save image.");
