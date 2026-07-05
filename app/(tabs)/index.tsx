@@ -3,7 +3,7 @@ import { TemplateType, useTemplateStore } from "@/store/useTemplateStore";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ActivityIndicator, Pressable, RefreshControl, ScrollView, Text, TextInput, View } from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -51,7 +51,11 @@ export default function Home() {
   const showEmptySearch = !isLoading && templates.length === 0 && searchQuery.trim().length > 0;
   const showEmpty = !isLoading && templates.length === 0 && searchQuery.trim().length === 0;
 
-  const featuredTemplates = templates.slice(0, 4);
+  const featuredTemplates = useMemo(() => {
+    if (templates.length === 0) return [];
+    const shuffled = [...templates].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 4);
+  }, [templates.length > 0 ? templates[0].id : null]);
   const allTemplates = templates;
 
   return (
