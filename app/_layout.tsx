@@ -2,7 +2,7 @@ import AnimatedSplash from "@/components/AnimatedSplash";
 import { useAuthListener } from "@/hooks/auth/use-auth";
 import { useAuthStore } from "@/store/useAuthStore";
 import { Ionicons } from "@expo/vector-icons";
-import { useFonts } from "expo-font";
+
 import { Stack, useRouter, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback, useEffect, useState } from "react";
@@ -15,9 +15,7 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   useAuthListener();
   const { isLoggedIn, isLoading } = useAuthStore();
-  const [fontsLoaded] = useFonts({
-    ...Ionicons.font,
-  });
+  const fontsLoaded = true;
 
   const segments = useSegments();
   const router = useRouter();

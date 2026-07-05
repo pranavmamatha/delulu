@@ -13,8 +13,8 @@ export default function Profile() {
   const { isLoading } = useJobStore();
 
   return (
-    <View className="flex-1 bg-delulu-card">
-      <View className="absolute top-0 left-0 right-0 h-1/2 bg-delulu-primary" />
+    <View className="flex-1 bg-delulu-primary">
+      <View className="absolute bottom-0 left-0 right-0 h-1/2 bg-delulu-card" />
       <ScrollView
         className="flex-1"
         showsVerticalScrollIndicator={false}

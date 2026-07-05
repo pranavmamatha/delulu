@@ -59,8 +59,8 @@ export default function Home() {
   const allTemplates = templates;
 
   return (
-    <View className="flex-1 bg-delulu-card">
-      <View className="absolute top-0 left-0 right-0 h-1/2 bg-delulu-primary" />
+    <View className="flex-1 bg-delulu-primary">
+      <View className="absolute bottom-0 left-0 right-0 h-1/2 bg-delulu-card" />
       <ScrollView
         className="flex-1"
         showsVerticalScrollIndicator={false}
@@ -252,10 +252,7 @@ function FeaturedTemplateCard({ template, index }: { template: TemplateType; ind
           </View>
         )}
 
-        {/* Bookmark Icon */}
-        <View className="absolute top-3 right-3 bg-black/30 p-1.5 rounded-full">
-          <Ionicons name="bookmark-outline" size={16} color="white" />
-        </View>
+
       </View>
 
       <View className="p-4">
@@ -292,7 +289,6 @@ function AllTemplateCard({ template, index }: { template: TemplateType; index: n
           <Text className="text-delulu-dark font-extrabold text-[13px] flex-1 mr-2" numberOfLines={1}>
             {template.name}
           </Text>
-          <Ionicons name="bookmark-outline" size={16} color="#3C4A22" />
         </View>
       </Pressable>
     </View>
