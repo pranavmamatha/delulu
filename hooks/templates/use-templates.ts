@@ -15,9 +15,7 @@ export function useTemplates() {
     const { setIsLoading, setHasMore, setTemplates, appendTemplates, setPage } = store.getState();
 
     try {
-      if (pageToFetch === 0) {
-        setIsLoading(true);
-      }
+      setIsLoading(true);
 
       const start = pageToFetch * PAGE_SIZE;
       const end = start + PAGE_SIZE - 1;
