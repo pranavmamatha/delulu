@@ -59,12 +59,11 @@ export default function Home() {
   const allTemplates = templates;
 
   return (
-    <View className="flex-1 bg-delulu-primary">
-      <View className="absolute bottom-0 left-0 right-0 h-1/2 bg-delulu-card" />
+    <View className="flex-1 bg-delulu-card">
       <ScrollView
         className="flex-1"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 120, flexGrow: 1 }}
+        contentContainerStyle={{ flexGrow: 1 }}
         onScroll={({ nativeEvent }) => {
           const isCloseToBottom = nativeEvent.layoutMeasurement.height + nativeEvent.contentOffset.y >= nativeEvent.contentSize.height - 200;
           if (isCloseToBottom && hasMore && !isLoading) {
@@ -84,7 +83,7 @@ export default function Home() {
         }
       >
         {/* Header Section (Yellow Background) */}
-        <SafeAreaView edges={["top"]} className="px-6 pt-4 pb-6">
+        <SafeAreaView edges={["top"]} className="px-6 pt-4 pb-6 bg-delulu-primary">
           <Animated.View entering={FadeInDown.duration(600)}>
             {/* Top Bar */}
             <View className="flex-row justify-center items-center mb-4">
@@ -110,7 +109,7 @@ export default function Home() {
         </SafeAreaView>
 
         {/* Content Section (White Background) */}
-        <View className="bg-delulu-card flex-1 rounded-t-[40px] pt-6 px-5 min-h-[600px] shadow-sm">
+        <View className="bg-delulu-card flex-1 rounded-t-[40px] pt-6 pb-[120px] px-5 min-h-[600px]">
 
           {/* Search Bar */}
           <View className="flex-row items-center gap-3 mb-6">

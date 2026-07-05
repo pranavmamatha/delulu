@@ -18,7 +18,7 @@ export default function Profile() {
       <ScrollView
         className="flex-1"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 100, flexGrow: 1 }}
+        contentContainerStyle={{ flexGrow: 1 }}
         onScroll={({ nativeEvent }) => {
           const isCloseToBottom = nativeEvent.layoutMeasurement.height + nativeEvent.contentOffset.y >= nativeEvent.contentSize.height - 200;
           if (isCloseToBottom && hasMore && !isLoading) {
@@ -31,7 +31,7 @@ export default function Profile() {
         <ProfileHeader />
 
         {/* My Creations Section */}
-        <View className="bg-delulu-card flex-1 rounded-t-[40px] pt-12 px-6 min-h-[600px] shadow-sm mt-4">
+        <View className="bg-delulu-card flex-1 rounded-t-[40px] pt-12 pb-[100px] px-6 min-h-[600px] mt-4">
           <Text className="text-xl font-extrabold text-delulu-dark mb-6 tracking-tight">
             My Creations
           </Text>
