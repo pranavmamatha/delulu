@@ -15,8 +15,8 @@ export default function Jobs() {
   if (isLoading && jobs.length === 0) {
     return (
       <View className="py-20 items-center justify-center">
-        <ActivityIndicator size="large" color="#ffffff" />
-        <Text className="text-white/50 text-sm mt-4">Loading your creations...</Text>
+        <ActivityIndicator size="large" color="#3C4A22" />
+        <Text className="text-gray-500 text-sm mt-4 font-semibold">Loading your creations...</Text>
       </View>
     );
   }
@@ -24,8 +24,8 @@ export default function Jobs() {
   if (jobs.length === 0) {
     return (
       <View className="py-12 items-center">
-        <Text className="text-white/50 text-base">No creations yet</Text>
-        <Text className="text-white/30 text-sm mt-2">Start creating amazing images!</Text>
+        <Text className="text-gray-500 text-base font-semibold">No creations yet</Text>
+        <Text className="text-gray-400 text-sm mt-2">Start creating amazing images!</Text>
       </View>
     );
   }
@@ -40,18 +40,11 @@ export default function Jobs() {
         }
       </View>
 
-      {hasMore && (
-        <Pressable
-          onPress={loadMore}
-          className="w-full py-4 items-center justify-center bg-white/5 rounded-2xl border border-white/10 mt-4 active:bg-white/10"
-          disabled={isLoading}
-        >
-          {isLoading ? (
-            <ActivityIndicator color="white" />
-          ) : (
-            <Text className="text-white font-semibold">Load More</Text>
-          )}
-        </Pressable>
+      {/* Loading Indicator for Infinite Scroll */}
+      {hasMore && isLoading && (
+        <View className="w-full py-4 items-center justify-center mt-4">
+          <ActivityIndicator color="#3C4A22" />
+        </View>
       )}
     </View>
   )
@@ -64,7 +57,7 @@ function ImageWithLoader({ source }: { source: string }) {
     <View className="relative">
       <Image
         source={source}
-        className={`h-56 w-full rounded-2xl bg-white/5 ${!isLoaded ? 'opacity-0' : 'opacity-100'}`}
+        className={`h-56 w-full rounded-2xl bg-gray-100 ${!isLoaded ? 'opacity-0' : 'opacity-100'}`}
         contentFit="cover"
         transition={300}
         onLoad={() => setIsLoaded(true)}
@@ -134,10 +127,10 @@ function ShimmerPlaceholder() {
 
   return (
     <Animated.View
-      className="h-56 w-full rounded-2xl bg-white/10 items-center justify-center"
+      className="h-56 w-full rounded-2xl bg-gray-100 items-center justify-center"
       style={animatedStyle}
     >
-      <ActivityIndicator color="rgba(255,255,255,0.3)" />
+      <ActivityIndicator color="rgba(0,0,0,0.1)" />
     </Animated.View>
   );
 }
