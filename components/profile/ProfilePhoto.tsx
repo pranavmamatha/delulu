@@ -16,7 +16,7 @@ export default function ProfilePhoto() {
     >
       {/* Avatar with Gradient Border */}
       <View className="mb-4">
-        <View className="bg-white/10 rounded-full p-1 border border-white/20 shadow-lg shadow-black/20">
+        <View className="bg-white/50 rounded-full p-1 border border-white shadow-sm shadow-black/5">
           <Image
             source={avatarUrl}
             className="h-32 w-32 rounded-full"
@@ -28,7 +28,7 @@ export default function ProfilePhoto() {
       {/* Name */}
       <Animated.Text
         entering={FadeIn.delay(200).duration(600)}
-        className="text-3xl font-bold text-white mb-1"
+        className="text-3xl font-extrabold text-delulu-dark mb-1 tracking-tight"
       >
         {fullName}
       </Animated.Text>
@@ -36,7 +36,7 @@ export default function ProfilePhoto() {
       {/* Subtitle */}
       <Animated.Text
         entering={FadeIn.delay(400).duration(600)}
-        className="text-sm text-white/80"
+        className="text-sm font-semibold text-delulu-dark/70"
       >
         Creative Artist
       </Animated.Text>

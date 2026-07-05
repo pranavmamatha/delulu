@@ -17,9 +17,8 @@ export default function TabLayout() {
           shadowOffset: { width: 0, height: -2 },
           shadowOpacity: 0.05,
           shadowRadius: 10,
-          height: 90,
-          paddingTop: 10,
-          paddingBottom: 25,
+          height: 84,
+          paddingTop: 8,
           position: 'absolute',
           borderTopLeftRadius: 24,
           borderTopRightRadius: 24,
@@ -35,59 +34,25 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="home"
-        options={{
-          title: "Home",
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="home-outline" size={24} color={color} />
-          )
-        }}
-      />
-      <Tabs.Screen
         name="index"
         options={{
-          title: "Templates",
+          title: "Home",
           tabBarIcon: ({ color, focused }) => (
-            <View className={`px-4 py-1.5 rounded-xl ${focused ? 'bg-[#D8FA39]' : 'bg-transparent'}`}>
-              <Ionicons name={focused ? "grid" : "grid-outline"} size={22} color={color} />
+            <View style={{ backgroundColor: focused ? '#D8FA39' : 'transparent', paddingHorizontal: 16, paddingVertical: 6, borderRadius: 12 }}>
+              <Ionicons name={focused ? "home" : "home-outline"} size={22} color={focused ? '#3C4A22' : color} />
             </View>
           )
         }}
       />
-      <Tabs.Screen
-        name="create"
-        options={{
-          title: "",
-          tabBarIcon: () => (
-            <View className="bg-[#D8FA39] w-14 h-14 rounded-full items-center justify-center -mt-6 shadow-lg shadow-black/20">
-              <Ionicons name="add" size={32} color="#3C4A22" />
-            </View>
-          )
-        }}
-      />
-      <Tabs.Screen
-        name="plans"
-        options={{
-          title: "My Plans",
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="clipboard-outline" size={24} color={color} />
-          )
-        }}
-      />
-      <Tabs.Screen
-        name="favorites"
-        options={{
-          title: "Favorites",
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="heart-outline" size={24} color={color} />
-          )
-        }}
-      />
-      {/* Hide profile from bottom tabs but keep it accessible */}
       <Tabs.Screen
         name="profile"
         options={{
-          href: null,
+          title: "Profile",
+          tabBarIcon: ({ color, focused }) => (
+            <View style={{ backgroundColor: focused ? '#D8FA39' : 'transparent', paddingHorizontal: 16, paddingVertical: 6, borderRadius: 12 }}>
+              <Ionicons name={focused ? "person" : "person-outline"} size={22} color={focused ? '#3C4A22' : color} />
+            </View>
+          )
         }}
       />
     </Tabs>

@@ -43,39 +43,33 @@ export default function ProfileHeader() {
     };
 
     return (
-        <View className="relative mb-8">
-            {/* Gradient Background */}
-            <LinearGradient
-                colors={['#4F46E5', '#9333EA', '#DB2777']}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
+        <View className="relative mb-8 bg-delulu-primary">
+            <View
                 style={{
                     paddingTop: top + 10,
-                    paddingBottom: 60,
-                    borderBottomLeftRadius: 40,
-                    borderBottomRightRadius: 40,
+                    paddingBottom: 40,
                 }}
             >
                 {/* Logout Button */}
                 <View className="flex-row justify-end px-6 mb-2">
                     <Pressable
                         onPress={handleLogout}
-                        className="bg-white/10 rounded-full p-3 active:bg-white/20 border border-white/20"
+                        className="bg-black/5 rounded-full p-3 active:bg-black/10"
                     >
                         <Ionicons
                             name="log-out-outline"
                             size={20}
-                            color="#fff"
+                            color="#3C4A22"
                         />
                     </Pressable>
                 </View>
 
                 {/* Profile Photo */}
                 <ProfilePhoto />
-            </LinearGradient>
+            </View>
 
             {/* Stats Section Overlapping */}
-            <View className="absolute -bottom-10 left-0 right-0">
+            <View className="absolute -bottom-8 left-0 right-0 z-10">
                 <ProfileStats />
             </View>
         </View>

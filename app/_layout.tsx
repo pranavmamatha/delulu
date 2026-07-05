@@ -1,6 +1,8 @@
 import AnimatedSplash from "@/components/AnimatedSplash";
 import { useAuthListener } from "@/hooks/auth/use-auth";
 import { useAuthStore } from "@/store/useAuthStore";
+import { Ionicons } from "@expo/vector-icons";
+import { useFonts } from "expo-font";
 import { Stack, useRouter, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback, useEffect, useState } from "react";
@@ -13,6 +15,9 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   useAuthListener();
   const { isLoggedIn, isLoading } = useAuthStore();
+  const [fontsLoaded] = useFonts({
+    ...Ionicons.font,
+  });
 
   const segments = useSegments();
   const router = useRouter();
@@ -20,7 +25,7 @@ export default function RootLayout() {
   const [splashDone, setSplashDone] = useState(false);
 
   useEffect(() => {
-    if (!isLoading) {
+    if (!isLoading && fontsLoaded) {
       // Hide the native splash screen and show our animated one
       SplashScreen.hideAsync();
       // Give the animated splash a moment, then signal readiness
@@ -29,10 +34,10 @@ export default function RootLayout() {
       }, 1500);
       return () => clearTimeout(timer);
     }
-  }, [isLoading]);
+  }, [isLoading, fontsLoaded]);
 
   useEffect(() => {
-    if (isLoading) return;
+    if (isLoading || !fontsLoaded) return;
 
 
     const isLogin = segments[0] === 'login';

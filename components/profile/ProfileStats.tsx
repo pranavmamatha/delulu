@@ -11,11 +11,11 @@ export default function ProfileStats() {
     ).length;
 
     return (
-        <View className="flex-row mx-6 bg-gray-900/90 border border-white/10 rounded-2xl py-4 shadow-xl shadow-black/50 justify-between px-8 items-center">
+        <View className="flex-row mx-6 bg-white border border-gray-100 rounded-2xl py-4 shadow-sm shadow-black/5 justify-between px-8 items-center">
             <StatItem value={totalJobs} label="Total" />
-            <View className="h-8 w-[1px] bg-white/10" />
+            <View className="h-8 w-[1px] bg-gray-200" />
             <StatItem value={completedJobs} label="Completed" />
-            <View className="h-8 w-[1px] bg-white/10" />
+            <View className="h-8 w-[1px] bg-gray-200" />
             <StatItem value={processingJobs} label="Processing" />
         </View>
     );
@@ -24,8 +24,8 @@ export default function ProfileStats() {
 function StatItem({ value, label }: { value: number, label: string }) {
     return (
         <View className="items-center min-w-[64px]">
-            <Text className="text-xl font-bold text-white mb-1">{value}</Text>
-            <Text className="text-xs text-white/50 font-medium uppercase tracking-wider">{label}</Text>
+            <Text className="text-xl font-bold text-delulu-dark mb-1">{value}</Text>
+            <Text className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">{label}</Text>
         </View>
     );
 }
