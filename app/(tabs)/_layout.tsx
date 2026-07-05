@@ -17,8 +17,9 @@ export default function TabLayout() {
           shadowOffset: { width: 0, height: -2 },
           shadowOpacity: 0.05,
           shadowRadius: 10,
-          height: 84,
-          paddingTop: 8,
+          height: 90,
+          paddingTop: 10,
+          paddingBottom: 25,
           position: 'absolute',
           borderTopLeftRadius: 24,
           borderTopRightRadius: 24,
@@ -38,10 +39,13 @@ export default function TabLayout() {
         options={{
           title: "Home",
           tabBarIcon: ({ color, focused }) => (
-            <View style={{ backgroundColor: focused ? '#D8FA39' : 'transparent', paddingHorizontal: 16, paddingVertical: 6, borderRadius: 12 }}>
+            <View>
+              {focused && (
+                <View style={{ position: 'absolute', top: -6, left: -16, right: -16, bottom: -6, backgroundColor: '#D8FA39', borderRadius: 12 }} />
+              )}
               <Ionicons name={focused ? "home" : "home-outline"} size={22} color={focused ? '#3C4A22' : color} />
             </View>
-          )
+          ),
         }}
       />
       <Tabs.Screen
@@ -49,10 +53,13 @@ export default function TabLayout() {
         options={{
           title: "Profile",
           tabBarIcon: ({ color, focused }) => (
-            <View style={{ backgroundColor: focused ? '#D8FA39' : 'transparent', paddingHorizontal: 16, paddingVertical: 6, borderRadius: 12 }}>
+            <View>
+              {focused && (
+                <View style={{ position: 'absolute', top: -6, left: -16, right: -16, bottom: -6, backgroundColor: '#D8FA39', borderRadius: 12 }} />
+              )}
               <Ionicons name={focused ? "person" : "person-outline"} size={22} color={focused ? '#3C4A22' : color} />
             </View>
-          )
+          ),
         }}
       />
     </Tabs>

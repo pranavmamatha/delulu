@@ -12,10 +12,14 @@ import "../global.css";
 // Prevent the native splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync();
 
+import { useFonts } from "expo-font";
+
 export default function RootLayout() {
   useAuthListener();
   const { isLoggedIn, isLoading } = useAuthStore();
-  const fontsLoaded = true;
+  const [fontsLoaded] = useFonts({
+    ...Ionicons.font,
+  });
 
   const segments = useSegments();
   const router = useRouter();
